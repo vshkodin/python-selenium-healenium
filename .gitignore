@@ -3,3 +3,4 @@ src/
 .pytest_cache/
 .idea/
 __pycache__/
+pages/
