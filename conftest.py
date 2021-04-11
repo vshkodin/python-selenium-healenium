@@ -1,14 +1,14 @@
+from lib.common.base import Driver
 import pytest
-
+from selenium.webdriver.chrome.options import Options
 from selenium import webdriver
 import chromedriver_binary  # Adds chromedriver binary to path
 
 
 def pytest_addoption(parser):
-    parser.addoption("--name", action="store", default=False)
     parser.addoption("-H",action="store_true", default=False)
     parser.addoption("-I", action="store_true", default=False)
-
+    parser.addoption('--base_url', action='store')
 
 
 
@@ -47,18 +47,19 @@ def pytest_sessionfinish(session, exitstatus):
 
 
 @pytest.fixture()
-def driver_init():
+def driver_init(request):
     driver = webdriver.Chrome()
-    driver.get("http://automationpractice.com/index.php")
+    driver.get(request.config.getoption("--base_url"))
     driver.implicitly_wait(15)
     driver.maximize_window()
+    #driver.current_url()
+    driver=Driver(driver)
+    driver.base_url = request.config.getoption("--base_url")
     yield driver
     driver.quit()
 
 
-@pytest.fixture()
-def name(request):
-    return request.config.getoption("--name")
+
 
 @pytest.fixture()
 def H(request):
@@ -67,3 +68,7 @@ def H(request):
 @pytest.fixture()
 def init_run(request):
     return request.config.getoption("-I")
+
+@pytest.fixture()
+def base_url(request):
+    return request.config.getoption("--base_url")
