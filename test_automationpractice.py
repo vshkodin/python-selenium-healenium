@@ -1,23 +1,16 @@
-
 import pytest
 
 
 
-@pytest.mark.skip("temporaty")
-def test_one(driver_init, name):
-    print(name)
-    elem = driver_init.find_element_by_css_selector('a[title="Women"]')
-    elem.click()
-    #print(driver_init.page_source)
-    assert "Women - My Store" in driver_init.title
+def test_one(init_run,driver_init):
 
-def test_two(name,H,request):
-    if name:
-        print('!!!!!!!!!! name :',name)
-
-    if H:
-        print('!!!!!! request -H',request.config.getoption("-H"))
-        assert 0
+    if init_run:
+        print("RECORD HTML THREE DUE RUN")
+        print("IF TITLE OF THE PAGE DIFF CREATE NEW FILE")
     assert 1
 
 
+    #elem = driver_init.find_element_by_css_selector('a[title="Women"]')
+    #elem.click()
+    #print(driver_init.page_source)
+    #assert "Women - My Store" in driver_init.title

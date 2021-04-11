@@ -7,6 +7,7 @@ import chromedriver_binary  # Adds chromedriver binary to path
 def pytest_addoption(parser):
     parser.addoption("--name", action="store", default=False)
     parser.addoption("-H",action="store_true", default=False)
+    parser.addoption("-I", action="store_true", default=False)
 
 
 
@@ -58,6 +59,11 @@ def driver_init():
 @pytest.fixture()
 def name(request):
     return request.config.getoption("--name")
+
 @pytest.fixture()
 def H(request):
     return request.config.getoption("-H")
+
+@pytest.fixture()
+def init_run(request):
+    return request.config.getoption("-I")
