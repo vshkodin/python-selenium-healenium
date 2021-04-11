@@ -14,20 +14,7 @@ def pytest_addoption(parser):
 
 
 def pytest_sessionfinish(session, exitstatus):
-    # print("session---->>>>>", session)
-    # print("session---->>>>>", type(session))
-    # print("session---->>>>>", dir(session))
-    # print("session---->>>>>", session.Failed)
-    # for i in inspect.getmembers(session):
-    #     # to remove private and protected
-    #     # functions
-    #     if not i[0].startswith('_'):
-    #         # To remove other methods that
-    #         # doesnot start with a underscore
-    #         if not inspect.ismethod(i[1]):
-    #             print(i)
     print('\n')
-    print()
     if session.testsfailed:
 
         print("\n"*5)
@@ -58,14 +45,10 @@ def driver_init(request, headless):
     driver.get(request.config.getoption("--base_url"))
     driver.implicitly_wait(15)
     driver.maximize_window()
-    #driver.current_url()
-    driver=Driver(driver)
     driver.base_url = request.config.getoption("--base_url")
+    driver=Driver(driver)
     yield driver
     driver.quit()
-
-
-
 
 @pytest.fixture()
 def HEALING(request):
@@ -78,6 +61,7 @@ def init_run(request):
 @pytest.fixture()
 def base_url(request):
     return request.config.getoption("--base_url")
+
 @pytest.fixture()
 def headless(request):
     return request.config.getoption("-H")

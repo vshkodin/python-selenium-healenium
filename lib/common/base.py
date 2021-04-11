@@ -23,8 +23,9 @@ class Driver:
         return self.driver.current_url
 
     def page_saver(self):
-        #n = os.path.join("pages\\",    f"{self.get_url().replace(self.driver.base_url,'').replace(r'/','_')}.html")
-        n = os.path.join("pages\\", "page.html")
+        url = self.get_url()
+        url = url.replace(self.driver.base_url,'').replace(r'/','_')
+        n = os.path.join("pages\\", f"{url}.html")
         f = codecs.open(n, "w", "utf−8")
         h = self.page_source()
         f.write(h)
