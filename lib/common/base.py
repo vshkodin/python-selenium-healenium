@@ -7,6 +7,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 import os
 import codecs
 
+
 class Driver:
     def __init__(self,driver):
         self.driver=driver
@@ -18,9 +19,10 @@ class Driver:
 
     def get(self, URL):
         self.driver.get(f'{self.driver.base_url}{URL}')
-        self.page_saver()
+        if self.driver.init_run:
+            self.page_saver()
 
-    def click(self,LOCATOR):
+    def click(self, LOCATOR):
         elem = self.find(LOCATOR)
         elem.click()
 
@@ -40,6 +42,9 @@ class Driver:
         f = codecs.open(n, "w", "utf−8")
         h = self.page_source()
         f.write(h)
+
+    def verify_title(self,PATTERT):
+        assert PATTERT in self.title(), f"{PATTERT} not in {self.title()}"
 
     def quit(self):
         self.driver.quit()

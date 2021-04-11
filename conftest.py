@@ -16,7 +16,6 @@ def pytest_addoption(parser):
 def pytest_sessionfinish(session, exitstatus):
     print('\n')
     if session.testsfailed:
-
         print("\n"*5)
         print(' |-------------------------------------|',"\n",
               '|                                     |',"\n",
@@ -35,7 +34,7 @@ def pytest_sessionfinish(session, exitstatus):
 
 
 @pytest.fixture()
-def driver_init(request, headless):
+def driver_init(request, headless, init_run):
     if headless:
         options = Options()
         options.headless = True
@@ -45,6 +44,8 @@ def driver_init(request, headless):
     driver.get(request.config.getoption("--base_url"))
     driver.implicitly_wait(15)
     driver.maximize_window()
+    if init_run:
+        driver.init_run = request.config.getoption("-I")
     driver.base_url = request.config.getoption("--base_url")
     driver=Driver(driver)
     yield driver
